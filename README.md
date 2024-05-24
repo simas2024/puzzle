@@ -37,15 +37,15 @@ Required with options `--pz` and `-an`
 
 Required with animation (option `-an`) and assembling the puzzle (option `--pz`)
 
-### Imagemagick®
+#### Imagemagick®
 
 [See Reference ImageMagick®](#imagemagick)
 
-### WebP `cwebp` `webpmux`
+#### WebP `cwebp` `webpmux`
 
 [See Reference Webp](#webp)
 
-### APNG `apngasm`
+#### APNG `apngasm`
 
 [See Reference APNG](#apng)
 
