@@ -311,7 +311,7 @@ Run the following command in the directory containing the Dockerfile:
 
     docker run -it -v .:/app --rm puzzle --minparts 150 --maxparts 200 --photo photoC.jpg --pz 90 -an apng
 
-### Example E
+## Example E
 
 Make 80% of the puzzle
 
