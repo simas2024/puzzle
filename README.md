@@ -294,7 +294,7 @@ Make a puzzle with minimum 150 and maximum 200 pieces. Only play the game for 90
 <br/>
 <img align="center" title="Puzzle Image" width="700" src="./ExampleD/done_puzzle.webp.png">
 <div align="center">
-    Photo: 700 x 467 Pixel. 90% completed
+    Photo: 700 x 467 Pixel.
 </div>
 </div>
 <div align="center">
@@ -325,7 +325,7 @@ Make 80% of the puzzle
 <br/>
 <img align="center" title="Puzzle Image" width="700" src="./ExampleE/done_puzzle.webp.png">
 <div align="center">
-    Photo: 1186 x 966 Pixel. 80% complete
+    Photo: 1280 x 640 Pixel.
 </div>
 </div>
 
