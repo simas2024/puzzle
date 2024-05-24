@@ -345,8 +345,51 @@ The beveling in [bevel.zsh](./bevel.zsh) is performed using one of two functions
 
 `custom_bevel ()`: This function is invoked if the `-cb` option is used. It is designed not to be modified by the user. Instead, it serves to pause the script, allowing the user to manually apply a bevel design to the flat puzzle pieces using image processing software like Affinity Photo® ([See Apply a bevel design](#apply-a-bevel-design)). The script resumes when the user presses `<ENTER>` after completing the manual adjustments. Please keep in mind that more commands may have a big impact on the runtime of the script.
 
-`imagemagick_bevel ()`: This function is used if the `-cb` option is not set. It applies the bevel using ImageMagick® commands, which users can adjust to suit their preferences. The function includes commands that can be modified or new commands can be added for further customization.
+`imagemagick_bevel ()`: This function is used if the `-cb` option is not set. It applies the bevel using ImageMagick® commands, which users can adjust to suit their preferences. The function includes commands that can be modified or new commands can be added for further customization. 
 
+### Example
+
+Original code:
+
+```zsh
+imagemagick_bevel () 
+{
+    for png_file in $tsdir/**/img_puzzle_*.png; do
+        bevel_tmp_png_file="${png_file:r}_tmp_bevel.png"
+        bevel_png_file="${png_file:r}_bevel.png"
+
+        convert "$png_file" \
+            \( +clone -alpha Extract -blur 0x3 -shade 170x40 -alpha On -normalize +level 5% \
+            +clone +swap -compose overlay -composite \) \
+            -compose In -composite "$bevel_tmp_png_file"
+
+        convert "$bevel_tmp_png_file" \( +clone -background black -shadow 5x20+2+2 \) +swap \
+            -background none -layers merge +repage -gravity Center -extent $(identify -format "%wx%h" "$png_file") "$bevel_png_file"
+        
+        rm "$bevel_tmp_png_file"
+    done
+}
+```
+
+Modified code:
+
+```zsh
+imagemagick_bevel () 
+{
+    for png_file in $tsdir/**/img_puzzle_*.png; do
+        bevel_png_file="${png_file:r}_bevel.png"
+
+        convert "$png_file" \
+            \( +clone -alpha Extract -blur 0x5 -shade 170x40 -alpha On -normalize +level 5% \
+            +clone +swap -compose overlay -composite \) \
+            -compose In -composite "$bevel_png_file"
+    done
+}
+```
+
+1. The second convert command that applies a shadow effect has been deleted. This change will keep only the original beveled appearance without the additional shadow overlay, making the final image appear less deep or three-dimensional.
+2. In the first convert command, to demonstrate a possible change, we adjust the blur or shade settings through -blur 0x5 that increase the blurriness of the bevel effect.
+ 
 Hence [bevel.zsh](./bevel.zsh) setup provides flexibility, enabling users to either quickly apply a standardized bevel or to create a custom look by adjusting the script or using external tools.
 
 ### Apply a bevel design
