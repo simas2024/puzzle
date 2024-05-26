@@ -1,5 +1,10 @@
 # Make a Puzzle
 
+<div align="center">
+<img align="center" title="Puzzle Image" width="600" src="./img/puzzle.apng.png">
+</div>
+<br/>
+
 This script turns a photo into a puzzle by breaking it into pieces. It can also put the pieces back together to make a new image. Additionally, the script can create a simple animation that shows the puzzle being built step by step. 
 
 The puzzle pieces can be given a more realistic, three-dimensional look by adjusting an ImageMagick script that enables the bevel design of the individual pieces.
