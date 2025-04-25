@@ -107,7 +107,7 @@ To use this application with Docker, follow these instructions:
 
 To build the Docker image, run the following command in the directory containing the Dockerfile:
 
-    docker build -t puzzle .
+    docker buildx build --tag puzzle .
 
 This command builds a Docker image named puzzle.
 
