@@ -131,7 +131,7 @@ Make a puzzle with a default number of pieces (minimum 25 and maximum 40). Blue 
 
 ### Apply ImageMagick® beveling:
 
-    python PlayPuzzle.py --photo photoA.jpg --pz 100 --seed 43 -c b
+    python PlayPuzzle.py --photo photoF.jpg --pz 100 --seed 43 -c b
 
     Puzzle piece width-to-height ratio: 1.0416666666666665
     Make a puzzle with 30 (6x5) parts!
@@ -147,7 +147,7 @@ Make a puzzle with a default number of pieces (minimum 25 and maximum 40). Blue 
 
 ### Apply manual beveling:
 
-    python PlayPuzzle.py --photo photoA.jpg --pz 100 --seed 43 -c b -cb
+    python PlayPuzzle.py --photo photoF.jpg --pz 100 --seed 43 -c b -cb
 
     Puzzle piece width-to-height ratio: 1.0416666666666665
     Make a puzzle with 30 (6x5) parts!
@@ -320,7 +320,7 @@ Run the following command in the directory containing the Dockerfile:
 
 Make 80% of the puzzle
 
-    PlayPuzzle.py --minparts 30 --maxparts 200 --photo photoE.png --pz 80
+    python PlayPuzzle.py --minparts 30 --maxparts 200 --photo photoE.png --pz 80
 
     Puzzle piece width-to-height ratio: 1.0045172219085263
     Make a puzzle with 99 (11x9) parts!
@@ -357,21 +357,19 @@ The beveling in [bevel.zsh](./bevel.zsh) is performed using one of two functions
 Original code:
 
 ```zsh
-imagemagick_bevel () 
+imagemagick_bevel ()
 {
-    for png_file in $tsdir/**/img_puzzle_*.png; do
-        bevel_tmp_png_file="${png_file:r}_tmp_bevel.png"
-        bevel_png_file="${png_file:r}_bevel.png"
+    for png_file in "$tsdir"/**/img_puzzle_*.png; do
+        local file_path_base_name="${png_file:r}"
+        local out_file="${file_path_base_name}_bevel.png"
 
-        convert "$png_file" \
-            \( +clone -alpha Extract -blur 0x3 -shade 170x40 -alpha On -normalize +level 5% \
-            +clone +swap -compose overlay -composite \) \
-            -compose In -composite "$bevel_tmp_png_file"
+        magick "$png_file" -alpha extract "${file_path_base_name}_mask.png"
 
-        convert "$bevel_tmp_png_file" \( +clone -background black -shadow 5x20+2+2 \) +swap \
-            -background none -layers merge +repage -gravity Center -extent $(identify -format "%wx%h" "$png_file") "$bevel_png_file"
-        
-        rm "$bevel_tmp_png_file"
+        magick "${file_path_base_name}_mask.png" \( +clone -blur 0x2 -shade 120x20 -contrast-stretch 0% +sigmoidal-contrast 2x50% -fill grey70 -colorize 10%  \) +swap -alpha Off -compose CopyOpacity -composite "${file_path_base_name}_overlay.png"
+
+        magick "${png_file}" "${file_path_base_name}_overlay.png" -compose Hardlight -composite "${file_path_base_name}_bevel.png"
+
+        rm "${file_path_base_name}_mask.png" "${file_path_base_name}_overlay.png"
     done
 }
 ```
@@ -379,21 +377,24 @@ imagemagick_bevel ()
 Modified code:
 
 ```zsh
-imagemagick_bevel () 
+imagemagick_bevel ()
 {
-    for png_file in $tsdir/**/img_puzzle_*.png; do
-        bevel_png_file="${png_file:r}_bevel.png"
+    for png_file in "$tsdir"/**/img_puzzle_*.png; do
+        local file_path_base_name="${png_file:r}"
+        local out_file="${file_path_base_name}_bevel.png"
 
-        convert "$png_file" \
-            \( +clone -alpha Extract -blur 0x5 -shade 170x40 -alpha On -normalize +level 5% \
-            +clone +swap -compose overlay -composite \) \
-            -compose In -composite "$bevel_png_file"
+        magick "$png_file" -alpha extract "${file_path_base_name}_mask.png"
+
+        magick "${file_path_base_name}_mask.png" \( +clone -blur 0x3 -shade 120x20 -contrast-stretch 0% +sigmoidal-contrast 2x50% -fill grey50 -colorize 10%  \) +swap -alpha Off -compose CopyOpacity -composite "${file_path_base_name}_overlay.png"
+
+        magick "${png_file}" "${file_path_base_name}_overlay.png" -compose Hardlight -composite "${file_path_base_name}_bevel.png"
+
+        rm "${file_path_base_name}_mask.png" "${file_path_base_name}_overlay.png"
     done
 }
 ```
 
-1. The second convert command that applies a shadow effect has been deleted. This change will keep only the original beveled appearance without the additional shadow overlay, making the final image appear less deep or three-dimensional.
-2. In the first convert command, to demonstrate a possible change, we adjust the blur or shade settings through -blur 0x5 that increase the blurriness of the bevel effect.
+See https://usage.imagemagick.org/transform/#shade_blur for more information about customization options.
  
 Hence [bevel.zsh](./bevel.zsh) setup provides flexibility, enabling users to either quickly apply a standardized bevel or to create a custom look by adjusting the script or using external tools.
 
@@ -440,6 +441,10 @@ Depending on the number and size of the images, the batch processing might take 
 ## ImageMagick
 
 - https://imagemagick.org
+
+### ImageMagick - Bevel
+
+- https://usage.imagemagick.org/transform/#shade_blur
 
 ## Affinity Photo
 
