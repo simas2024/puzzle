@@ -71,7 +71,11 @@ Output is:
 
 ## Usage
 
+Command
+
     python PlayPuzzle.py --help
+
+Output (e.g.)
 
     usage: PlayPuzzle [-h] [-v] [-c {k,b,r}] [-f {png,svg}] [-ot] [-cb] [-an {apng,webp}] [--pz <[0..100]>] [--ep <integer>]
         [--seed <integer>] [--width <integer>] [--height <integer>] [--dpi <integer>] [--minparts <integer>]
@@ -121,9 +125,13 @@ This command runs the puzzle Docker container, showing the help information as i
 
 ## Version
 
+Command
+
     python PlayPuzzle.py --version
 
-    PuzzleBoard v1.0.0
+Output (e.g.)
+
+    PuzzleBoard v1.1.7
 
 ## Example A
 
@@ -147,7 +155,11 @@ Make a puzzle with a default number of pieces (minimum 25 and maximum 40). Blue 
 
 ### Apply manual beveling:
 
+Command
+
     python PlayPuzzle.py --photo photoF.jpg --pz 100 --seed 43 -c b -cb
+
+Output
 
     Puzzle piece width-to-height ratio: 1.0416666666666665
     Make a puzzle with 30 (6x5) parts!
@@ -200,7 +212,11 @@ Make a puzzle with minimum 20 and maximum 30 pieces. Black masks (default). An i
 
 ### Apply manual beveling:
 
+Command
+
     python PlayPuzzle.py --minparts 20 --maxparts 30 --photo photoA.jpg --pz 100 --seed 33 -cb
+
+Output
 
     Puzzle piece width-to-height ratio: 1.0
     Make a puzzle with 20 (5x4) parts!
@@ -235,7 +251,11 @@ Make a puzzle with minimum 200 and maximum 230 pieces. Black masks (default).
 
 ### Apply ImageMagick® beveling:
 
+Command
+
     python PlayPuzzle.py --minparts 200 --maxparts 230 --photo photoB.jpg --pz 100
+
+Output
 
     Puzzle piece width-to-height ratio: 1.000250062515629
     Make a puzzle with 216 (18x12) parts!
@@ -251,7 +271,11 @@ Make a puzzle with minimum 200 and maximum 230 pieces. Black masks (default).
 
 ### Apply manual beveling:
 
+Command
+
     python PlayPuzzle.py --minparts 200 --maxparts 230 --photo photoB.jpg --pz 100 -cb
+
+Output
 
     Puzzle piece width-to-height ratio: 1.000250062515629
     Make a puzzle with 216 (18x12) parts!
@@ -286,7 +310,11 @@ Run the following command in the directory containing the Dockerfile:
 
 Make a puzzle with minimum 150 and maximum 200 pieces. Only play the game for 90% and create an `apng`` animation.
 
+Command
+
     python PlayPuzzle.py --minparts 150 --maxparts 200 --photo photoC.jpg --pz 90 -an apng
+
+Ouput
 
     Puzzle piece width-to-height ratio: 0.9992862241256244
     Make a puzzle with 150 (15x10) parts!
@@ -320,11 +348,16 @@ Run the following command in the directory containing the Dockerfile:
 
 Make 80% of the puzzle
 
+Command
+
     python PlayPuzzle.py --minparts 30 --maxparts 200 --photo photoE.png --pz 80
 
-    Puzzle piece width-to-height ratio: 1.0045172219085263
-    Make a puzzle with 99 (11x9) parts!
+Output
+
+    Puzzle piece width-to-height ratio: 1.0
+    Make a puzzle with 32 (8x4) parts!
     Play puzzle
+
 
 <div align="center">
 <br/>
