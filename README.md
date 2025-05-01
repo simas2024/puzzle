@@ -196,7 +196,11 @@ Make a puzzle with minimum 20 and maximum 30 pieces. Black masks (default). An i
 
 ### Apply ImageMagick® beveling:
 
+Command
+
     python PlayPuzzle.py --minparts 20 --maxparts 30 --photo photoA.jpg --pz 100 --seed 33
+
+Output
 
     Puzzle piece width-to-height ratio: 1.0
     Make a puzzle with 20 (5x4) parts!
