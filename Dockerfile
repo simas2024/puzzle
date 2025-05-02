@@ -6,7 +6,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     zsh \
     imagemagick \
     apngasm \
-    webp
+    webp \
+    fonts-dejavu-core
 
 RUN mkdir /app
 
@@ -15,5 +16,7 @@ WORKDIR /app
 COPY . /app
 
 RUN --mount=type=cache,target=/root/.cache pip install -r requirements.txt
+
+RUN python3 -c "import matplotlib.pyplot as plt"
 
 ENTRYPOINT ["python", "PlayPuzzle.py"]

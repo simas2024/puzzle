@@ -74,7 +74,13 @@ def check_pz_percent(value):
         raise argparse.ArgumentTypeError(f"'--pz' an integer is expected, but '{value}' was set")
     
 parser = argparse.ArgumentParser(prog='PlayPuzzle', description='Create puzzle piece masks and/or create puzzle pieces from a photo and make a new photo from the puzzle pieces.',
-                                 epilog='Example: PlayPuzzle.py --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg -pz')
+                                 epilog="""Example: Split the image into 30–40 pieces and reconstruct a new image using 60% of the pieces. The 'seed' parameter controls the randomness.
+
+  python PlayPuzzle.py --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
+
+  docker run -it -v .:/app --rm puzzle --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
+  """,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
 
 valid_c_values = ['k', 'b', 'r']
 
