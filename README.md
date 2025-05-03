@@ -11,25 +11,34 @@ The puzzle pieces can be given a more realistic, three-dimensional look by adjus
 
 This tool is great for fun and educational projects.
 
-# Requirements
+# Setup
 
-## Requirements for Running Natively
+Note for Windows users: this project uses `zsh` and UNIX-specific tools. Native execution on Windows is not supported. Please use the provided Docker setup instead.
 
-### Python
+## Setup for Running Natively
 
-    python3 --version
-    Python 3.12
+For native execution, it is recommended to use `pyenv` to manage your Python environment. This avoids conflicts with the system Python and ensures consistent versions across systems.
 
-### Pip
+For `pyenv` based setup on Linux or macOS run the commands in a `bash` shell:
 
-    pip3 --version
-    pip 24.0
+### Pyenv and Python
 
-### Python libs
+pyenv
 
-    pip3 install -U scipy --break-system-packages
-    pip3 install -U matplotlib --break-system-packages
-    pip3 install -U pillow --break-system-packages
+    curl https://pyenv.run | bash
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    exec "$SHELL"
+
+Python 3.12 and Requirements
+
+    pyenv install 3.12.3
+    cd <puzzle dir>
+    pyenv local 3.12.3
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
 
 ### Zsh
 
@@ -54,9 +63,9 @@ Required with animation (option `-an`) and assembling the puzzle (option `--pz`)
 
 [See Reference APNG](#apng)
 
-## Requirements for Running in Docker
+## Setup for Running in Docker
 
-Docker version 26.0.0
+Docker version >=26.0.0
 
 # Run
 
@@ -75,11 +84,11 @@ Command
 
     python PlayPuzzle.py --help
 
-Output (e.g.)
+Output
 
-    usage: PlayPuzzle [-h] [-v] [-c {k,b,r}] [-f {png,svg}] [-ot] [-cb] [-an {apng,webp}] [--pz <[0..100]>] [--ep <integer>]
-        [--seed <integer>] [--width <integer>] [--height <integer>] [--dpi <integer>] [--minparts <integer>]
-        [--maxparts <integer>] [--photo <file-path>]
+    usage: PlayPuzzle [-h] [-v] [-c {k,b,r}] [-f {png,svg}] [-ot] [-cb] [-an {apng,webp}] [--pz <[0..100]>]
+                    [--ep <integer>] [--seed <integer>] [--width <integer>] [--height <integer>] [--dpi <integer>]
+                    [--minparts <integer>] [--maxparts <integer>] [--photo <file-path>]
 
     Create puzzle piece masks and/or create puzzle pieces from a photo and make a new photo from the puzzle pieces.
 
@@ -101,7 +110,11 @@ Output (e.g.)
     --maxparts <integer>  maximum number of puzzle pieces
     --photo <file-path>   photo file
 
-    Example: PlayPuzzle.py --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz
+    Example: Split the image into 30–40 pieces and reconstruct a new image using 60% of the pieces. The 'seed' parameter controls the randomness.
+
+    python PlayPuzzle.py --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
+
+    docker run -it -v .:/app --rm puzzle --minparts 30 --maxparts 40 --seed 35 --photo photoA.jpg --pz 60
 
 ## Using with Docker
 
@@ -129,7 +142,7 @@ Command
 
     python PlayPuzzle.py --version
 
-Output (e.g.)
+Output
 
     PuzzleBoard v1.1.7
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-docker build -t puzzle .
-
 zmodload zsh/zutil
 
 zparseopts -D -E -A opts tsdir:=opts
