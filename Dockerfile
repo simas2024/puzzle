@@ -18,11 +18,9 @@ RUN rm -rf /tmp/apngasm/ \
  && mkdir -p /tmp/apngasm/build \
  && cd /tmp/apngasm/build \
  && cmake ../ \
- && make -j$(nproc) \
- && cp lib/libapngasm.so /usr/local/lib/ \
- && echo "/usr/local/lib" > /etc/ld.so.conf.d/apngasm.conf \
+ && make \
+ && make install \ 
  && ldconfig \
- && cp cli/apngasm /usr/local/bin/ \
  && cd / && rm -rf /tmp/apngasm
 
 RUN mkdir /app
