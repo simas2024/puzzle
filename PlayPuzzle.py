@@ -4,7 +4,7 @@
 
 ''' play puzzle '''
 
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 import sys
 if sys.version_info < (3, 12):
@@ -17,6 +17,7 @@ import os
 import datetime
 from PIL import Image
 import matplotlib.pyplot as plt
+import shutil
 
 def check_photo_size(value):
     try:
@@ -72,6 +73,23 @@ def check_pz_percent(value):
         return ivalue
     except ValueError:
         raise argparse.ArgumentTypeError(f"'--pz' an integer is expected, but '{value}' was set")
+
+def check_command_exists(cmd):
+    readme_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "README.md"))
+    if shutil.which(cmd) is None:
+        sys.exit(
+            f"Error: '{cmd}' is not installed or not in PATH. "
+            f"See file://{readme_path}"
+        )
+
+def check_requirements(args):
+    if args.an:
+        if args.an == "webp":
+            check_command_exists("webpmux")
+        elif args.an == "apng":
+            check_command_exists("apngasm")
+    if args.pz and args.pz > 0:
+        check_command_exists("convert")
     
 parser = argparse.ArgumentParser(prog='PlayPuzzle', description='Create puzzle piece masks and/or create puzzle pieces from a photo and make a new photo from the puzzle pieces.',
                                  epilog="""Example: Split the image into 30–40 pieces and reconstruct a new image using 60% of the pieces. The 'seed' parameter controls the randomness.
@@ -119,6 +137,8 @@ parser.add_argument('--maxparts', type=check_maxparts_size, required=False, defa
 parser.add_argument('--photo', type=str, required=False, default=None, help='photo file', metavar=('<file-path>'))
 
 args = parser.parse_args()
+
+check_requirements(args)
 
 if (args.height and args.width and not args.photo) or (args.photo and not args.height and not args.width):
   pass 

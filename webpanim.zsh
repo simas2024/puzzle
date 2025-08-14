@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-zmodload zsh/zutil
-
 zparseopts -D -E -A opts tsdir:=opts
 
 local tsdir=$opts[-tsdir]

@@ -57,11 +57,35 @@ Required with animation (option `-an`) and assembling the puzzle (option `--pz`)
 
 #### WebP `cwebp` `webpmux`
 
-[See Reference Webp](#webp)
+[See Reference WebP](#webp)
 
 #### APNG `apngasm`
 
 [See Reference APNG](#apng)
+
+#### Recommended Versions
+
+The script has been tested with the following versions.
+
+```bash
+command -v convert && convert --version
+# Version: ImageMagick 7.1.1-43 Q16 x86_64 22550 https://imagemagick.org
+
+command -v webpmux && webpmux -version
+# 1.5.0
+
+command -v apngasm && apngasm --version
+# APNG Assembler v3.1.10 (frontend v3.1.10)
+```
+
+> **Note:** Installing `apngasm` via
+>
+> ```bash
+> sudo apt install apngasm
+> ```
+>
+> may install an outdated version (e.g., **2.91-5+b1**) that does not work with this script.
+> See [Reference APNG](#apng) for instructions to build version 3.1.10 or newer from source.
 
 ## Setup for Running in Docker
 
@@ -507,8 +531,6 @@ Depending on the number and size of the images, the batch processing might take 
 - https://developers.google.com/speed/webp/docs/webpmux
 
 ## APNG
-
-- https://apngasm.sourceforge.net
 
 - https://github.com/apngasm/apngasm
 
